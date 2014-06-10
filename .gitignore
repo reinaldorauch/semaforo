@@ -1,5 +1,5 @@
 *__history/*
 *.identcache
-Win32/*
+proj/Win32/*
 *.~*~
 
