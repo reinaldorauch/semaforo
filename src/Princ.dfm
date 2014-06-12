@@ -25,4 +25,28 @@ object FmPrinc: TFmPrinc
     TabOrder = 0
     OnClick = CbAlertaClick
   end
+  object EdChange: TEdit
+    Left = 135
+    Top = 538
+    Width = 121
+    Height = 21
+    TabOrder = 1
+  end
+  object CbSelect: TComboBox
+    Left = 8
+    Top = 538
+    Width = 121
+    Height = 21
+    TabOrder = 2
+    Text = 'Selecione o sinaleiro'
+  end
+  object BtnSetName: TButton
+    Left = 262
+    Top = 536
+    Width = 75
+    Height = 25
+    Caption = 'Alterar'
+    TabOrder = 3
+    OnClick = BtnSetNameClick
+  end
 end

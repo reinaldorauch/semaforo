@@ -7,13 +7,16 @@ Type
   TSemaforo = class(TImage)
     private
       // Fields
-      FTamLamp: Byte;
-      FTimer  : TTimer;
-      FAtual  : Byte;
-      FAlerta : Boolean;
-      FAcende : Boolean;
+      FTamLamp  : Byte;
+      FTimer    : TTimer;
+      FAtual    : Byte;
+      FAlerta   : Boolean;
+      FAcende   : Boolean;
+      FQueimada : Array[1..13] of Boolean;
+      FNomeRua  : String;
 
       procedure Desenha;
+      procedure DesenhaNome(Val: String);
       procedure Lampada(Pos: Byte; Liga: Boolean);
       procedure ResetAberto;
       procedure ResetFechado;
@@ -22,13 +25,15 @@ Type
       // Eventos
       procedure FTimerTimer (Sender: TObject);
     procedure SetAlerta(const Value: Boolean);
+    procedure SetNomeRua(const Value: String);
     public
       Proximo: TSemaforo;
 
-      constructor Create(X, Y: Integer; crTamLamp: Byte; AOwner: TComponent);
+      constructor Create(X, Y: Integer; crTamLamp: Byte; crNome: String; AOwner: TComponent);
       destructor Destroy;
 
       property Alerta: Boolean read FAlerta Write SetAlerta;
+      property NomeRua: String read FNomeRua Write SetNomeRua;
 
   end;
 
@@ -36,7 +41,7 @@ implementation
 
 { TSemaforo }
 
-constructor TSemaforo.Create(X, Y: Integer; crTamLamp: Byte;
+constructor TSemaforo.Create(X, Y: Integer; crTamLamp: Byte; crNome: String;
   AOwner: TComponent);
 begin
   inherited Create(AOwner);
@@ -48,11 +53,14 @@ begin
 
   FTamLamp := CrTamLamp;
   Width    := 3 * FTamLamp;
-  Height   := 6 * FTamLamp;
+  Height   := 7 * FTamLamp;
+  Color    := clWhite;
 
   FAtual   := 7;
   FAlerta  := True;
   Desenha;
+
+  NomeRua  := crNome;
 
   FTimer := TTimer.Create(AOwner);
   FTimer.Interval := 500;
@@ -73,6 +81,20 @@ begin
     for I := 1 to 13 do
       Lampada(i, False);
   end;
+end;
+
+procedure TSemaforo.DesenhaNome(Val: String);
+begin
+  with Canvas do
+    begin
+      Brush.Color := clWhite;
+      Pen.Color := clWhite;
+      Rectangle(0, 6 * FTamLamp, 3 * FTamLamp, 7 * FTamLamp);
+
+      Font.Size := Round(0.5 * FTamLamp);
+      Font.Color := clRed;
+      TextOut(10, 6 * FTamLamp + 5, Val);
+    end;
 end;
 
 destructor TSemaforo.Destroy;
@@ -125,6 +147,7 @@ procedure TSemaforo.Lampada(Pos: Byte; Liga: Boolean);
 var x, y: Integer;
     cor: TColor;
 begin
+
   case Pos of
     1..6 : begin
       X   := FTamLamp * 2;
@@ -143,8 +166,11 @@ begin
     end;
   end;
 
-  if Not Liga then
-    cor := clBlack;
+  if FQueimada[Pos] then
+    cor := clBlue
+  else
+    if Not Liga then
+      cor := clBlack;
 
   with Canvas do
   begin
@@ -212,6 +238,15 @@ begin
       FAlerta := Value;
       MudaAlerta(Self, Proximo);
     end;
+end;
+
+procedure TSemaforo.SetNomeRua(const Value: String);
+begin
+  if(FNomeRua <> Value) then
+  begin
+    FNomeRua := Value;
+    DesenhaNome(FNomeRua);
+  end;
 end;
 
 end.
