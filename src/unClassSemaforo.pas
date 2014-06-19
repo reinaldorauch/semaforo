@@ -21,9 +21,12 @@ Type
       procedure ResetAberto;
       procedure ResetFechado;
       procedure MudaAlerta(Init, Prox: TSemaforo);
+      function  TraduzClick(X, Y: Integer): Byte;
 
       // Eventos
       procedure FTimerTimer (Sender: TObject);
+      procedure TSemaforoMouseDown(Sender: TObject; Button: TMouseButton;
+        Shift: TShiftState; X, Y: Integer);
     procedure SetAlerta(const Value: Boolean);
     procedure SetNomeRua(const Value: String);
     public
@@ -61,6 +64,8 @@ begin
   Desenha;
 
   NomeRua  := crNome;
+
+  OnMouseDown := TSemaforoMouseDown; // Assinando o evento
 
   FTimer := TTimer.Create(AOwner);
   FTimer.Interval := 500;
@@ -247,6 +252,50 @@ begin
     FNomeRua := Value;
     DesenhaNome(FNomeRua);
   end;
+end;
+
+function TSemaforo.TraduzClick(X, Y: Integer): Byte;
+var
+  PosX, PosY: Byte;
+begin
+  PosX := (X div FTamLamp) + 1;
+  PosY := (Y div FTamLamp) + 1;
+
+  if(PosX = 1) AND (PosY < 7) then
+    Result := PosY + 7
+  else
+    if(PosX = 2) AND (PosY = 6) then
+      Result := 7
+    else
+      if(PosX = 3) AND (PosY < 7) then
+        Result := PosY
+      else
+        Result := 0;
+end;
+
+procedure TSemaforo.TSemaforoMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+var
+  PosLamp: Byte;
+  Liga: Boolean;
+begin
+  PosLamp := TraduzClick(X, Y);
+
+  if(PosLamp <> 0) then
+    begin
+      if NOT FQueimada[PosLamp] then
+        PlaySound('quebra.wav', 1, $0001)
+      else
+        PlaySound('troca.wav', 1, $0001);
+
+      FQueimada[PosLamp] := NOT FQueimada[PosLamp];
+
+      Liga := (PosLamp = FAtual) OR
+        ((PosLamp = 6) AND (FAtual < 6)) OR
+        ((PosLamp = 13) AND (FAtual < 13) AND (FAtual > 7));
+
+      Lampada(PosLamp, Liga);
+    end;
 end;
 
 end.
