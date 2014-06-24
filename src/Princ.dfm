@@ -3,7 +3,7 @@ object FmPrinc: TFmPrinc
   Top = 0
   Caption = 'Sinaleiros'
   ClientHeight = 567
-  ClientWidth = 827
+  ClientWidth = 1223
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
