@@ -1,0 +1,154 @@
+--------------------------------------
+Arquivo: Princ.pas
+
+Legenda:
+ - Linhas iniciando com "+" são linhas novas
+ - Linhas inciando com "-" são linhas antigas
+--------------------------------------
+Linhas 10 até 22:
+ type
+   TFmPrinc = class(TForm)
+     CbAlerta: TCheckBox;
++    EdChange: TEdit;
++    CbSelect: TComboBox;
++    BtnSetName: TButton;
+     procedure FormCreate(Sender: TObject);
+     procedure CbAlertaClick(Sender: TObject);
++    procedure BtnSetNameClick(Sender: TObject);
++
+   private
+     { Private declarations }
+   public
+
+Linhas 32 até o final do arquivo 
+
+ {$R *.dfm}
+
++procedure TFmPrinc.BtnSetNameClick(Sender: TObject);
++begin
++  if(Assigned(ListSemaforo[CbSelect.ItemIndex])) then
++    ListSemaforo[CbSelect.ItemIndex].NomeRua := EdChange.Text;
++end;
++
+ procedure TFmPrinc.CbAlertaClick(Sender: TObject);
+ begin
+   ListSemaforo[0].Alerta := CbAlerta.Checked;
+ end;
+
+ procedure TFmPrinc.FormCreate(Sender: TObject);
++var
++  I: Integer;
+ begin
+   SetLength(ListSemaforo, 3);
+
+-  ListSemaforo[0] := TSemaforo.Create(10, 50, 50, Self);
+-  ListSemaforo[1] := TSemaforo.Create(200, 50, 50, Self);
+-  ListSemaforo[2] := TSemaforo.Create(400, 50, 50, Self);
++  ListSemaforo[0] := TSemaforo.Create(10, 50, 50, 'Rua A', Self);
++  ListSemaforo[1] := TSemaforo.Create(200, 50, 50, 'Avenida Vicente Machado', Self);
++  ListSemaforo[2] := TSemaforo.Create(400, 50, 50, 'Av. Cel. Carlos Cavalcanti', Self);
+
+   ListSemaforo[0].Proximo := ListSemaforo[1];
+   ListSemaforo[1].Proximo := ListSemaforo[2];
+   ListSemaforo[2].Proximo := ListSemaforo[0];
++
++  for I := 0 to Length(ListSemaforo) - 1 do
++    CbSelect.Items.Add(IntToStr(i + 1));
+ end;
+
+ end.
+
+--------------------------------------
+Arquivo: unClassSemaforo.pas
+--------------------------------------
+Linhas: 7 à 22
+   TSemaforo = class(TImage)
+     private
+       // Fields
+       FTimer    : TTimer;
+       FAtual    : Byte;
+       FAlerta   : Boolean;
+       FAcende   : Boolean;
+       FQueimada : Array[1..13] of Boolean;
++      FNomeRua  : String;
+
+       procedure Desenha;
++      procedure DesenhaNome(Val: String);
+       procedure Lampada(Pos: Byte; Liga: Boolean);
+       procedure ResetAberto;
+       procedure ResetFechado;
+
+Linhas: 25 à 38
+       // Eventos
+       procedure FTimerTimer (Sender: TObject);
+     procedure SetAlerta(const Value: Boolean);
++    procedure SetNomeRua(const Value: String);
+     public
+       Proximo: TSemaforo;
+
+-      constructor Create(X, Y: Integer; crTamLamp: Byte; AOwner: TComponent);
++      constructor Create(X, Y: Integer; crTamLamp: Byte; crNome: String; AOwner: TComponent);
+       destructor Destroy;
+
+       property Alerta: Boolean read FAlerta Write SetAlerta;
++      property NomeRua: String read FNomeRua Write SetNomeRua;
+
+   end;
+
+Linhas: 42 à 47
+ { TSemaforo }
+
+-constructor TSemaforo.Create(X, Y: Integer; crTamLamp: Byte;
++constructor TSemaforo.Create(X, Y: Integer; crTamLamp: Byte; crNome: String;
+   AOwner: TComponent);
+ begin
+   inherited Create(AOwner);
+
+Linhas 54 à 67
+   FTamLamp := CrTamLamp;
+   Width    := 3 * FTamLamp;
+-  Height   := 6 * FTamLamp;
++  Height   := 7 * FTamLamp;
++  Color    := clWhite;
+
+   FAtual   := 7;
+   FAlerta  := True;
+   Desenha;
+
++  NomeRua  := crNome;
++
+   FTimer := TTimer.Create(AOwner);
+   FTimer.Interval := 500;
+   FTimer.Enabled  := True;
+
+Linhas 85 à 102
+
++procedure TSemaforo.DesenhaNome(Val: String);
++begin
++  with Canvas do
++    begin
++      Brush.Color := clWhite;
++      Pen.Color := clWhite;
++      Rectangle(0, 6 * FTamLamp, 3 * FTamLamp, 7 * FTamLamp);
++
++      Font.Size := Round(0.5 * FTamLamp);
++      Font.Color := clRed;
++      TextOut(10, 6 * FTamLamp + 5, Val);
++    end;
++end;
++
+ destructor TSemaforo.Destroy;
+ begin
+   FTimer.Free;
+
+Linhas 243 até o final do arquivo
++procedure TSemaforo.SetNomeRua(const Value: String);
++begin
++  if(FNomeRua <> Value) then
++  begin
++    FNomeRua := Value;
++    DesenhaNome(FNomeRua);
++  end;
++end;
++
+ end.
