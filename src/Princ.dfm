@@ -2,7 +2,7 @@ object FmPrinc: TFmPrinc
   Left = 0
   Top = 0
   Caption = 'Sinaleiros'
-  ClientHeight = 567
+  ClientHeight = 807
   ClientWidth = 1223
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -27,14 +27,14 @@ object FmPrinc: TFmPrinc
   end
   object EdChange: TEdit
     Left = 135
-    Top = 538
+    Top = 778
     Width = 121
     Height = 21
     TabOrder = 1
   end
   object CbSelect: TComboBox
     Left = 8
-    Top = 538
+    Top = 778
     Width = 121
     Height = 21
     TabOrder = 2
@@ -42,11 +42,22 @@ object FmPrinc: TFmPrinc
   end
   object BtnSetName: TButton
     Left = 262
-    Top = 536
+    Top = 776
     Width = 75
     Height = 25
     Caption = 'Alterar'
     TabOrder = 3
     OnClick = BtnSetNameClick
+  end
+  object CbAlerta2: TCheckBox
+    Left = 24
+    Top = 416
+    Width = 97
+    Height = 17
+    Caption = 'Alerta'
+    Checked = True
+    State = cbChecked
+    TabOrder = 4
+    OnClick = CbAlerta2Click
   end
 end
