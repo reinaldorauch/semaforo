@@ -5,9 +5,9 @@
     <Transaction>2014/06/04 19:15:20.000.841,=C:\Users\Delphi\Documents\RAD Studio\Projects\GroupedItems1.pas</Transaction>
     <Transaction>2014/06/04 19:15:21.000.447,=C:\Users\Delphi\Documents\RAD Studio\Projects\ItemDetail1.pas</Transaction>
     <Transaction>2014/06/04 21:46:00.000.457,=C:\Users\Delphi\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2014/06/04 21:46:52.000.441,C:\Users\Delphi\Documents\RAD Studio\Projects\Unit1.dfm=C:\Users\Delphi\Desktop\projetosDelphi\semaforo\src\Princ.dfm</Transaction>
-    <Transaction>2014/06/04 21:46:52.000.441,C:\Users\Delphi\Documents\RAD Studio\Projects\Unit1.pas=C:\Users\Delphi\Desktop\projetosDelphi\semaforo\src\Princ.pas</Transaction>
-    <Transaction>2014/06/04 21:47:27.000.312,C:\Users\Delphi\Documents\RAD Studio\Projects\Project1.dproj=C:\Users\Delphi\Desktop\projetosDelphi\semaforo\proj\sinaleiro.dproj</Transaction>
-    <Transaction>2014/06/10 20:48:08.826,=C:\Users\Delphi\Desktop\projetosDelphi\semaforo\src\unClassSemaforo.pas</Transaction>
+    <Transaction>2014/06/04 21:46:52.000.441,C:\Users\Delphi\Desktop\projetosDelphi\semaforo\src\Princ.dfm=C:\Users\Delphi\Documents\RAD Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2014/06/04 21:46:52.000.441,C:\Users\Delphi\Desktop\projetosDelphi\semaforo\src\Princ.pas=C:\Users\Delphi\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2014/06/04 21:47:27.000.312,C:\Users\Delphi\Desktop\projetosDelphi\semaforo\proj\sinaleiro.dproj=C:\Users\Delphi\Documents\RAD Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2014/06/10 20:48:08.000.826,=C:\Users\Delphi\Desktop\projetosDelphi\semaforo\src\unClassSemaforo.pas</Transaction>
   </Transactions>
 </BorlandProject>

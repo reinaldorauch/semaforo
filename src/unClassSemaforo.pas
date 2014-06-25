@@ -116,7 +116,7 @@ begin
 
       case FPosition of
        1, 3: Rectangle(0, 6 * FTamLamp, 3 * FTamLamp, 7 * FTamLamp);
-       2, 4: Rectangle(0, 3 * FTamLamp, 3 * FTamLamp, 4 * FTamLamp);
+       2, 4: Rectangle(0, 3 * FTamLamp, 6 * FTamLamp, 4 * FTamLamp);
       end;
 
       Font.Size := Round(0.5 * FTamLamp);
